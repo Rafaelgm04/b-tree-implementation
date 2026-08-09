@@ -18,6 +18,8 @@ typedef struct SO_NO{
     //s[0] guarda M
     unsigned *s;
 
+    unsigned tam_vector;
+
 
 
 }SO_NO;
@@ -26,6 +28,7 @@ typedef struct SO_NO{
 typedef struct Arvore_B{
 
     SO_NO *ptraiz;
+    //sempre d +1
     unsigned D;
 
 
