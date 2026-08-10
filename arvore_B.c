@@ -23,6 +23,9 @@ Arvore_B init(unsigned D){
 
 }
 //realocar para um novo tamanho deve ser no minimo m+1 ou d+1 eu acho tem que ver se e isso mesmo
+//para chaves e d+1
+//para os ponteiro e d+2 
+//verificar
 static Bool func_realoc(SO_NO *pt){
 
 
@@ -55,26 +58,26 @@ static ___busca__(Arvore_B *self,unsigned x, SO_NO *pt, unsigned *f, unsigned *g
     }
 
 }
-static unsigned novaCapacidade(unsigned atual, unsigned D)
-{
+
+
+//ver se e isso mesmo depois!!
+static unsigned novaCapacidade(unsigned atual, unsigned D){
+
+    //D + 1 porque qunado fica em estado "inrregular" ele pode ficar com +1 para facilitar a proxima operacao
     unsigned maximo = D + 1;
 
     if (atual >= maximo)
         return maximo;
 
+    //ver se e isso mesmo
     if (atual == 0)
-        return 1;
+        return 2;
 
     double ocupacao = (double)atual / maximo;
 
-    /*
-        ocupacao = 0%   -> crescimento ≈ 100%
-        ocupacao = 100% -> crescimento = 15%
-    */
     double porcentagem = 1.0 - (0.85 * ocupacao);
 
-    unsigned nova =
-        atual + (unsigned)ceil(atual * porcentagem);
+    unsigned nova = atual + (unsigned)ceil(atual * porcentagem);
 
     if (nova > maximo)
         nova = maximo;
@@ -87,6 +90,8 @@ static unsigned novaCapacidade(unsigned atual, unsigned D)
 static Bool cisao(Arvore_B *self,SO_NO *pt,SO_NO *pai){
 
     unsigned M = pt->s[0];
+
+    //o tamanho qunado for nessesario fazer uma cisao sempre vais er impar 
     unsigned meio = (self->D + 2) / 2;
     unsigned qtdDireita = M - meio;
     unsigned chaveSobe = pt->s[meio];

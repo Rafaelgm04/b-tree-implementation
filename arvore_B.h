@@ -17,7 +17,7 @@ typedef struct SO_NO{
     unsigned **p;
     //s[0] guarda M
     unsigned *s;
-
+    //tamanho alocado do vetor 
     unsigned tam_vector;
 
 
