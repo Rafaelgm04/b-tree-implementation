@@ -11,16 +11,28 @@ typedef enum{
     FALSE = 0,TRUE = 1
 }Bool;
 
+typedef struct SO_NO SO_NO;
+typedef struct Arvore_B Arvore_B;
+
+typedef struct info
+{
+    int chave;
+    /*
+    ...
+    ...
+    */
+}info;
+
 
 typedef struct SO_NO{
     //unsigned  M;
-    unsigned **p;
+    SO_NO **p;
     //s[0] guarda M
     unsigned *s;
     //tamanho alocado do vetor 
     unsigned tam_vector;
 
-
+    
 
 }SO_NO;
 
@@ -28,13 +40,15 @@ typedef struct SO_NO{
 typedef struct Arvore_B{
 
     SO_NO *ptraiz;
+
+    //ordem 
     //sempre d +1
     unsigned D;
 
 
-    SO_NO *(*Busca)(Arvore_B *,unsigned/*, SO_NO, unsigned, unsigned*/);
+    unsigned *(*Busca)(Arvore_B *, unsigned);
 
-    Bool (*Insercao)(Arvore_B *,SO_NO);
+    Bool (*Insercao)(Arvore_B *, unsigned);
 
     SO_NO (*Remocao)(Arvore_B *,unsigned);
 
@@ -57,9 +71,9 @@ SO_NO *ArvoreB_get(Arvore_B *self, unsigned chave);
 
 void ArvoreB_set(Arvore_B *self,SO_NO *no);
 
-SO_NO *ArvoreB_Busca(Arvore_B *self,unsigned chave/*, SO_NO pt, unsigned f, unsigned g*/);
+unsigned *ArvoreB_busca(Arvore_B *self, unsigned x);
 
-Bool ArvoreB_insercao(Arvore_B *self,SO_NO NO);
+Bool ArvoreB_insercao(Arvore_B *self, unsigned x);
 
 SO_NO ArvoreB_remocao(Arvore_B *self,unsigned chave);
 
