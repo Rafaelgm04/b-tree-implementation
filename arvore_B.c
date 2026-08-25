@@ -402,9 +402,9 @@ inline static void ___comcatenacao_ou_redistribuicao____(SO_NO *NO_atu, SO_NO *p
 
 }
 //acha o sucessor da sub arvore e remove e faz as operavao que precisa ate o NO_atua 
-static unsigned ___remove___(SO_NO *NO_atu, SO_NO *pai, unsigned i){
+static unsigned ___remove___(SO_NO *NO_atu, SO_NO *pai){
 
-    if(*NO_atu->p == NULL){
+    if(NO_atu->p == NULL){
         //remove a chave que foi substituida
         unsigned temp = NO_atu->s[1];
         memmove(&NO_atu->s[1],&NO_atu->s[2],(*NO_atu->s - 1) * sizeof(*NO_atu->s));
@@ -415,7 +415,7 @@ static unsigned ___remove___(SO_NO *NO_atu, SO_NO *pai, unsigned i){
     
     unsigned temp;
     //para retornar o sucessor
-    temp = ___remove___(*NO_atu->p,NO_atu, i);
+    temp = ___remove___(*NO_atu->p,NO_atu);
     
     //verifica se precisa de alguma operacao se precisar faz
     ___comcatenacao_ou_redistribuicao____(NO_atu,pai);
@@ -437,13 +437,14 @@ static unsigned ___ArvoreB_remocao___(Arvore_B *self, SO_NO *NO_atu, unsigned x,
 
         if(NO_atu->p == NULL){
             //remove a chave
-            memmove(&NO_atu->s[i+1],&NO_atu->s[i+2],(*NO_atu->s - 1) * sizeof(*NO_atu->s));
+            memmove(&NO_atu->s[i+1],&NO_atu->s[i+2],(*NO_atu->s - i - 1) * sizeof(*NO_atu->s));
             //decrementa o m
             (*NO_atu->s)--;
         }else{
             //chama a funcao que vai remover o sucessor e rotar ele e vai verificar se precica fazer alguma opercao de comcatenacao_ou_substitui ate o ponto do NO_atual
-            NO_atu->s[i + 1 ] = ___remove___(NO_atu->p[i + 1],NO_atu,i);
+            NO_atu->s[i + 1] = ___remove___(NO_atu->p[i + 1],NO_atu);
         }
+        ___comcatenacao_ou_redistribuicao____(NO_atu,pai);
         //retorna a chave retirada
         return temp_ret;
     }        
