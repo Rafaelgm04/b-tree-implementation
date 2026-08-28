@@ -14,21 +14,12 @@ typedef enum{
 typedef struct SO_NO SO_NO;
 typedef struct Arvore_B Arvore_B;
 
-typedef struct info
-{
-    int chave;
-    /*
-    ...
-    ...
-    */
-}info;
-
 
 typedef struct SO_NO{
     //unsigned  M;
     SO_NO **p;
     //s[0] guarda M
-    unsigned *s;
+    int *s;
     //tamanho alocado do vetor 
     unsigned tam_vector;
 
@@ -41,22 +32,22 @@ typedef struct Arvore_B{
 
     SO_NO *ptraiz;
 
-    //ordem 
-    //sempre d +1
+    // ordem d da árvore B
     unsigned D;
 
 
-    unsigned *(*Busca)(Arvore_B *, unsigned);
 
-    Bool (*Insercao)(Arvore_B *, unsigned);
+    int *(*Busca)(Arvore_B *, int);
 
-    SO_NO (*Remocao)(Arvore_B *,unsigned);
+    Bool (*Insercao)(Arvore_B *, int);
 
-    Bool (*Desaloca)(Arvore_B *,unsigned);
+    Bool (*Remocao)(Arvore_B *,int);
+
+    Bool (*Desaloca)(Arvore_B *);
 
     void (*Implecao)(Arvore_B *);
 
-    SO_NO *(*get)(Arvore_B *,unsigned);
+    SO_NO *(*get)(Arvore_B *,int);
 
     void (*set)(Arvore_B *,SO_NO *);
 
@@ -67,17 +58,17 @@ typedef struct Arvore_B{
 Arvore_B init(unsigned D);
 
 
-SO_NO *ArvoreB_get(Arvore_B *self, unsigned chave);
+SO_NO *ArvoreB_get(Arvore_B *self, int chave);
 
 void ArvoreB_set(Arvore_B *self,SO_NO *no);
 
-unsigned *ArvoreB_busca(Arvore_B *self, unsigned x);
+int *ArvoreB_busca(Arvore_B *self, int x);
 
-Bool ArvoreB_insercao(Arvore_B *self, unsigned x);
+Bool ArvoreB_insercao(Arvore_B *self, int x);
 
-SO_NO ArvoreB_remocao(Arvore_B *self,unsigned chave);
+Bool ArvoreB_remocao(Arvore_B *self,int chave);
 
-Bool ArvoreB_desaloca(Arvore_B *self,unsigned chave);
+Bool ArvoreB_desaloca(Arvore_B *self);
 
 void ArvoreB_implecao(Arvore_B *self);
 
