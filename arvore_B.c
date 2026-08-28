@@ -1,5 +1,5 @@
 #include "arvore_B.h"
-
+#include "print_B.h"
 
 
 
@@ -58,13 +58,13 @@ static Bool func_realoc(unsigned D, SO_NO *pt){
     unsigned nova = novaCapacidade(pt->tam_vector, D);
 
     if(nova <= pt->tam_vector)
-        return FALSE;
+        return FALSE_;
 
 
     int *novo_s = malloc((nova + 1) * sizeof(novo_s[0]));
 
     if(novo_s == NULL)
-        return FALSE;
+        return FALSE_;
 
     SO_NO **novo_p = NULL;
 
@@ -74,7 +74,7 @@ static Bool func_realoc(unsigned D, SO_NO *pt){
 
         if(novo_p == NULL){
             free(novo_s);
-            return FALSE;
+            return FALSE_;
         }
     }
 
@@ -84,8 +84,7 @@ static Bool func_realoc(unsigned D, SO_NO *pt){
     //pagina interna possui m+1 ponteiros
     if(pt->p != NULL){
 
-        memcpy(novo_p, pt->p, (pt->s[0] + 1) * sizeof(novo_p[0])
-        );
+        memcpy(novo_p, pt->p, (pt->s[0] + 1) * sizeof(novo_p[0]));
     }
 
     free(pt->s);
@@ -96,7 +95,7 @@ static Bool func_realoc(unsigned D, SO_NO *pt){
 
     pt->tam_vector = nova;
 
-    return TRUE;
+    return TRUE_;
 }
 
 //talvez falazer uma busca binaria depois nas chaves
@@ -187,13 +186,13 @@ static Bool insere_chave_aux(unsigned D, SO_NO *NO, int x){
 
     //caso chaves repetidas
     if (i <= m && NO->s[i] == x)
-        return FALSE;
+        return FALSE_;
     
     //Garante espaco para mais uma chave 
     if(m >= NO->tam_vector && m <= 2 * D){
 
         if(!resize_chaves(D, NO))
-            return FALSE;
+            return FALSE_;
         }
     //abre espaco para x 
     if (i <= m) {
@@ -205,7 +204,7 @@ static Bool insere_chave_aux(unsigned D, SO_NO *NO, int x){
 
     //Atualiza m
     NO->s[0]++;
-    return TRUE;
+    return TRUE_;
 }
 
 //*(p->s) == M
@@ -223,7 +222,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
     SO_NO *p2 = malloc(sizeof(*p2));
 
     if (p2 == NULL)
-        return FALSE;
+        return FALSE_;
 
     p2->tam_vector = novaCapacidade(qtdDireita, self->D);
     /*
@@ -239,7 +238,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
 
     if(p2->s == NULL){
         free(p2);
-        return FALSE;
+        return FALSE_;
     }
 
     p2->p = NULL;
@@ -253,7 +252,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
         if(p2->p == NULL){
             free(p2->s);
             free(p2);
-            return FALSE;
+            return FALSE_;
         }
 
         memcpy(
@@ -281,7 +280,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
             free(p2->p);
             free(p2->s);
             free(p2);
-            return FALSE;
+            return FALSE_;
         }
 
         novaRaiz->tam_vector = 2 * self->D + 1;
@@ -300,7 +299,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
             free(p2->s);
             free(p2);
 
-            return FALSE;
+            return FALSE_;
         }
 
         novaRaiz->s[0] = 1;
@@ -313,7 +312,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
 
         self->ptraiz = novaRaiz;
 
-        return TRUE;
+        return TRUE_;
     }
 
 
@@ -331,7 +330,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
             free(p2->p);
             free(p2);
 
-            return FALSE;
+            return FALSE_;
             }
     }
 
@@ -354,7 +353,7 @@ static Bool cisao(Arvore_B *self, SO_NO *pt, SO_NO *pai){
     //atuliza o m da primeira pagina gerada *(pt->s) == M
     *(pt->s) = meio -1;
 
-    return TRUE;
+    return TRUE_;
 }
 
 //ver o caso que a arvore esta vasia
@@ -366,19 +365,19 @@ static Bool ArvoreB_insercao_aux(Arvore_B *self, SO_NO *NO_atu, int x, SO_NO *pa
         i++;
 
     if(i < (unsigned)*NO_atu->s && x == NO_atu->s[i + 1])
-        return FALSE;
+        return FALSE_;
 
         
     //se for folha 
     if(NO_atu->p == NULL){
-        if(!insere_chave_aux(self, NO_atu, x)){
-            return FALSE;
+        if(!insere_chave_aux(self->D, NO_atu, x)){
+            return FALSE_;
         }
         if((unsigned)*NO_atu->s > 2 * self->D)
             if(!cisao(self,NO_atu,pai)){
-                return FALSE;
+                return FALSE_;
             }
-        return TRUE;
+        return TRUE_;
     }
     
 
@@ -386,7 +385,7 @@ static Bool ArvoreB_insercao_aux(Arvore_B *self, SO_NO *NO_atu, int x, SO_NO *pa
 
     if((unsigned)*NO_atu->s > 2 * self->D)
         if(!cisao(self,NO_atu,pai)){
-                return FALSE;
+                return FALSE_;
         }
 
     return temp;
@@ -398,7 +397,7 @@ static inline Bool inser_chave_ponteiro_aux(unsigned D, SO_NO *NO, int x, SO_NO 
 
     //essa função e para pagina interna
     if(NO->p == NULL)
-        return FALSE;
+        return FALSE_;
 
     //Procura posição correta da chave
     while(i <= m && NO->s[i] < x)
@@ -406,13 +405,13 @@ static inline Bool inser_chave_ponteiro_aux(unsigned D, SO_NO *NO, int x, SO_NO 
 
     //nao permite chave repetida
     if(i <= m && NO->s[i] == x)
-        return FALSE;
+        return FALSE_;
 
     //garante espaco para mais uma chave e um ponteiro 
     if(m >= NO->tam_vector && m <= 2 * D){
 
         if(!resize_chaves(D, NO))
-            return FALSE;
+            return FALSE_;
     }
 
 
@@ -432,7 +431,7 @@ static inline Bool inser_chave_ponteiro_aux(unsigned D, SO_NO *NO, int x, SO_NO 
     //Incrementa m
     (*NO->s)++;
 
-    return TRUE;
+    return TRUE_;
 }
 
 //i = a posicao do pai que vai receber a comcatenacao
@@ -442,18 +441,28 @@ static void comcatenacao_aux(unsigned D,unsigned i, SO_NO *NO_atu, SO_NO *pai, S
     unsigned n = 1;
     //passa todos as chaves e os ponteiro para o recebedor
     while(n <= (unsigned)*NO_atu->s){
-        inser_chave_ponteiro_aux(D,recebedor,NO_atu->s[n],NO_atu->p[n]);
-        (*recebedor->s)++;
+        if(recebedor->p == NULL){
+            insere_chave_aux(D, recebedor, NO_atu->s[n]);
+        }else{
+            inser_chave_ponteiro_aux(D,recebedor,NO_atu->s[n],NO_atu->p[n]);
+        }
         n++;
     }
     //passa a chave do pai para o recebedor
-    inser_chave_ponteiro_aux(D,recebedor,pai->s[i],NO_atu->p[0]);
+    if(recebedor->p == NULL){
+
+        insere_chave_aux(D, recebedor, pai->s[i]);
+
+    }else{
+
+        inser_chave_ponteiro_aux(D, recebedor, pai->s[i], NO_atu->p[0]);
+    }
 
 
 
     //remove a chave do pai 
-    memmove(&pai->s[i],&pai->s[i+1],(*pai->s - i -1)*sizeof(*NO_atu->s));
-    memmove(&pai->p[i],&pai->p[i+1],(*pai->s - i)*sizeof(SO_NO));
+    memmove(&pai->s[i],&pai->s[i+1],(*pai->s - i)*sizeof(*NO_atu->s));
+    memmove(&pai->p[i],&pai->p[i+1],(*pai->s - i)*sizeof(pai->p[0]));
     pai->s[0]--;
     free(NO_atu->s);
     free(NO_atu->p);
@@ -465,27 +474,58 @@ static void comcatenacao_aux(unsigned D,unsigned i, SO_NO *NO_atu, SO_NO *pai, S
 static inline void redistribuicao_aux(unsigned D,unsigned i, SO_NO *NO_atu, SO_NO *pai, SO_NO *doador, unsigned dir_esq){
 
     //caso doador a esquerda
-    if(dir_esq == 0)
-        while(*doador->s > *NO_atu->s){
-            
-            //insere a chave do pai e o ponteiro do doador
-            inser_chave_ponteiro_aux(D, NO_atu, pai->s[i], doador->p[*doador->s]);
-            //coloca a chave do doador no pai
-            pai->s[i] = doador->s[*doador->s];
-            //tira a ultima chave e o ultimo ponteiro do adoador
-            (*doador->s)--;
+    unsigned objetivo = ((unsigned)*NO_atu->s + (unsigned)*doador->s) / 2;
+    if(dir_esq == 0){
 
+        while((unsigned)*NO_atu->s < objetivo){
+
+            if(NO_atu->p == NULL){
+
+                insere_chave_aux(D, NO_atu, pai->s[i]);
+
+                pai->s[i] = doador->s[*doador->s];
+
+                (*doador->s)--;
+
+            }else{
+
+                unsigned mNO = (unsigned)*NO_atu->s;
+
+                unsigned mDoador = (unsigned)*doador->s;
+
+                memmove(&NO_atu->s[2], &NO_atu->s[1], mNO * sizeof(NO_atu->s[0]));
+
+                memmove(&NO_atu->p[1], &NO_atu->p[0], (mNO + 1) * sizeof(NO_atu->p[0]));
+
+                NO_atu->s[1] = pai->s[i];
+
+                NO_atu->p[0] = doador->p[mDoador];
+
+                pai->s[i] = doador->s[mDoador];
+
+                NO_atu->s[0]++;
+                doador->s[0]--;
+            }
         }
+    }
     else
-        while(*doador->s > *NO_atu->s){
+        while((unsigned)*NO_atu->s < objetivo){
             
-            //insere a chave do pai e o ponteiro do doador
-            inser_chave_ponteiro_aux(D, NO_atu, pai->s[i], doador->p[0]);
+            if(NO_atu->p == NULL){
+                insere_chave_aux(D, NO_atu, pai->s[i]);
+
+            }else{
+
+                //insere a chave do pai e o ponteiro do doador
+                inser_chave_ponteiro_aux(D, NO_atu, pai->s[i], doador->p[0]);
+            }
+
             //coloca a chave do doador no pai
             pai->s[i] = doador->s[1];
             //tira a primeira chave e o p0 ponteiro do adoador
-            memmove(doador->s + sizeof(int), doador->s + 2*sizeof(int), ((*doador->s) - 1)*sizeof(*NO_atu->s));
-            memmove(doador->p, doador->p + sizeof(SO_NO), (*doador->s)*sizeof(SO_NO));
+            memmove(&doador->s[1], &doador->s[2], ((*doador->s) - 1)*sizeof(*NO_atu->s));
+            if(doador->p != NULL)
+                memmove(doador->p, &doador->p[1], (*doador->s)*sizeof(pai->p[0]));
             (*doador->s)--;
 
         }
@@ -500,21 +540,21 @@ static inline void casos_aux(unsigned D,unsigned i, SO_NO *NO_atu, SO_NO *pai){
         if((unsigned)*NO_atu->s + (unsigned)*pai->p[1]->s >= 2 * D)
             redistribuicao_aux(D, 1, NO_atu, pai, /*doador*/pai->p[i + 1],1);
         else
-            comcatenacao_aux(D, 1, NO_atu, pai, pai->p[i+1]);
+            comcatenacao_aux(D, 1, pai->p[1], pai, NO_atu);
 
     //se ta no final
     }else if(i == (unsigned)pai->s[0]){
-        if((unsigned)*pai->p[i - 1]->s >= 2*D)
+        if( (unsigned)*NO_atu->s + (unsigned)*pai->p[i - 1]->s >= 2 * D )
             redistribuicao_aux(D, i, NO_atu, pai, /*doador*/pai->p[i - 1],0);
         else
             comcatenacao_aux(D, i, NO_atu, pai, pai->p[i-1]);
 
     //se ta no meio
     }else{
-        if((unsigned)*pai->p[i + 1]->s >= 2*D)
-            redistribuicao_aux(D, i, NO_atu, pai, /*doador*/pai->p[i + 1],1);
+        if( (unsigned)*NO_atu->s + (unsigned)*pai->p[i + 1]->s >= 2 * D )
+            redistribuicao_aux(D, i + 1, NO_atu, pai, /*doador*/pai->p[i + 1],1);
 
-        else if((unsigned)*pai->p[i - 1]->s >= 2*D)
+        else if( (unsigned)*NO_atu->s + (unsigned)*pai->p[i - 1]->s >= 2 * D )
             redistribuicao_aux(D, i, NO_atu, pai, /*doador*/pai->p[i - 1],0);
 
         else{
@@ -523,7 +563,7 @@ static inline void casos_aux(unsigned D,unsigned i, SO_NO *NO_atu, SO_NO *pai){
                 comcatenacao_aux(D, i , NO_atu, pai, pai->p[i-1]);
 
             else
-                comcatenacao_aux(D, i, NO_atu, pai, pai->p[i+1]);
+                comcatenacao_aux(D, i + 1, pai->p[i + 1], pai, NO_atu);
 
         }
 
@@ -541,9 +581,10 @@ inline static void comcatenacao_ou_redistribuicao(unsigned D, SO_NO *NO_atu, SO_
 
     unsigned i = 0;
     //procura a posicao do ponteiro do No_atu no pai
-    while(pai->p[i] != NO_atu)
+    while(i <= (unsigned)*pai->s && pai->p[i] != NO_atu)
         i++;
-
+    if(i > (unsigned)*pai->s)
+        return;
     casos_aux(D ,i, NO_atu , pai);
 
 }
@@ -573,7 +614,7 @@ static int remove_sucessor_aux(unsigned D, SO_NO *NO_atu, SO_NO *pai){
 static Bool ArvoreB_remocao_aux(unsigned D, SO_NO *NO_atu, int x, SO_NO *pai){
 
     unsigned i = 0;
-    Bool temp_ret = FALSE;
+    Bool temp_ret = FALSE_;
     while(i < (unsigned)*NO_atu->s && x > NO_atu->s[i + 1])
         i++;
 
@@ -587,13 +628,20 @@ static Bool ArvoreB_remocao_aux(unsigned D, SO_NO *NO_atu, int x, SO_NO *pai){
             (*NO_atu->s)--;
         }else{
             //chama a funcao que vai remove_sucessor_auxr o sucessor e rotar ele e vai verificar se precica fazer alguma opercao de comcatenacao_ou_substitui ate o ponto do NO_atual
-            NO_atu->s[i + 1] = remove_sucessor_aux(D, NO_atu->p[i + 1],NO_atu);
+            
+            //gambiarra
+            SO_NO *aux = NO_atu->p[i + 1];
+            while(aux->p != NULL){
+                aux = aux->p[0];
+            }
+            NO_atu->s[i + 1] = aux->s[1];
+            remove_sucessor_aux(D, NO_atu->p[i + 1],NO_atu);
         }
 
         comcatenacao_ou_redistribuicao(D, NO_atu,pai);
 
         //retorna a chave retirada
-        return TRUE;
+        return TRUE_;
     }        
 
     if(NO_atu->p != NULL)
@@ -650,24 +698,55 @@ Bool ArvoreB_insercao(Arvore_B *self,int x){
 
 }
 
-Bool ArvoreB_remocao(Arvore_B *self,int chave){
-    if(self->ptraiz == NULL){
-            
-            return FALSE;
+Bool ArvoreB_remocao(Arvore_B *self, int chave){
+
+    if(self->ptraiz == NULL)
+        return FALSE_;
+
+    Bool ret = ArvoreB_remocao_aux(self->D, self->ptraiz, chave, NULL);
+
+    if(!ret)
+        return FALSE_;
+    if(
+        self->ptraiz != NULL &&
+        self->ptraiz->s[0] == 0
+    ){
+
+        SO_NO *antiga = self->ptraiz;
+        if(antiga->p == NULL){
+
+            free(antiga->s);
+            free(antiga);
+
+            self->ptraiz = NULL;
+        }
+
+        else{
+
+            self->ptraiz = antiga->p[0];
+
+            free(antiga->p);
+            free(antiga->s);
+            free(antiga);
+        }
     }
-    return ArvoreB_remocao_aux(self->D,self->ptraiz,chave,NULL);
+
+    return TRUE_;
 }
 
 void ArvoreB_implecao(Arvore_B *self){
-
+    imprime(self->ptraiz,1);
 }
 
 //recurciva
 Bool ArvoreB_desaloca(Arvore_B *self){
+
+    if(self == NULL)
+        return FALSE_;
+
     ArvoreB_desaloca_aux(self->ptraiz);
-    free(self->ptraiz);
+
+    self->ptraiz = NULL;
+
+    return TRUE_;
 }
-
-SO_NO *ArvoreB_get(Arvore_B *self, int chave){}
-
-void ArvoreB_set(Arvore_B *self,SO_NO *no){}

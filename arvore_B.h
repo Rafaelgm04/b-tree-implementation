@@ -7,8 +7,10 @@
 #include <math.h>
 #include <string.h>
 
+
 typedef enum{
-    FALSE = 0,TRUE = 1
+    FALSE_,
+    TRUE_ 
 }Bool;
 
 typedef struct SO_NO SO_NO;
@@ -47,9 +49,6 @@ typedef struct Arvore_B{
 
     void (*Implecao)(Arvore_B *);
 
-    SO_NO *(*get)(Arvore_B *,int);
-
-    void (*set)(Arvore_B *,SO_NO *);
 
 }Arvore_B;
 
@@ -57,10 +56,6 @@ typedef struct Arvore_B{
 //deve inicializar a "classe e inicializar os ponteitos para funcao com cada funcao sua e inicilizar o valor D"
 Arvore_B init(unsigned D);
 
-
-SO_NO *ArvoreB_get(Arvore_B *self, int chave);
-
-void ArvoreB_set(Arvore_B *self,SO_NO *no);
 
 int *ArvoreB_busca(Arvore_B *self, int x);
 
