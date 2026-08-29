@@ -54,6 +54,11 @@ static void imprime(const SO_NO *s_no, int salto_linha, int colunai, int colunaf
             n += (size_t)escrito;
         }
 
+
+        /*
+         * Centro da região reservada
+         * para esta página.
+         */
         int meio = (temp->colunai + temp->colunaf) / 2;
 
 
@@ -63,6 +68,11 @@ static void imprime(const SO_NO *s_no, int salto_linha, int colunai, int colunaf
 
         attroff(COLOR_PAIR(2));
 
+
+        /*
+         * Página interna:
+         * m chaves => m+1 filhos.
+         */
         if (temp->NO->p != NULL)
         {
             unsigned quantidade_filhos = m + 1;
@@ -80,6 +90,11 @@ static void imprime(const SO_NO *s_no, int salto_linha, int colunai, int colunaf
 
                     filho->nivel = temp->nivel + 1;
 
+
+                    /*
+                     * Divide a região horizontal
+                     * do pai entre os filhos.
+                     */
                     filho->colunai = temp->colunai + (largura * (int)i) / (int)quantidade_filhos;
 
                     filho->colunaf =temp->colunai + (largura * (int)(i + 1)) / (int)quantidade_filhos;

@@ -15,14 +15,9 @@ Arvore_B init(unsigned D){
     p.Insercao = ArvoreB_insercao;
     p.Remocao  = ArvoreB_remocao;
     p.Desaloca = ArvoreB_desaloca;
-    p.Implecao = ArvoreB_implecao;
-
-    p.get      = ArvoreB_get;
-    p.set      = ArvoreB_set;
-    
+    p.Implecao = ArvoreB_implecao;    
     
     return p;
-
 }
 
 //realocar para um novo tamanho deve ser no minimo m+1 ou d+1 eu acho tem que ver se e isso mesmo
@@ -735,7 +730,8 @@ Bool ArvoreB_remocao(Arvore_B *self, int chave){
 }
 
 void ArvoreB_implecao(Arvore_B *self){
-    imprime(self->ptraiz,1);
+    imprime_arvore(self->ptraiz);
+
 }
 
 //recurciva
