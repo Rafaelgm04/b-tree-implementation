@@ -14,16 +14,15 @@ static void limpa_buffer(void)
 int main(void)
 {
     unsigned D;
-    int opcao;
+    int opcao = 0;
     int chave;
 
     printf("Digite a ordem D da Arvore B: ");
+    while(opcao <= 0)
+        if (scanf("%d", &opcao) != 1 || opcao <= 0)
+            printf("Valor de D invalido. Digite novamente: \n");
+        
 
-    if (scanf("%d", &opcao) != 1 || opcao <= 0)
-    {
-        printf("Valor de D invalido.\n");
-        return EXIT_FAILURE;
-    }
     D = (unsigned)opcao;
     Arvore_B arvore = init(D);
 
