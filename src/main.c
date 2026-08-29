@@ -19,12 +19,12 @@ int main(void)
 
     printf("Digite a ordem D da Arvore B: ");
 
-    if (scanf("%u", &D) != 1 || D == 0)
+    if (scanf("%d", &opcao) != 1 || opcao <= 0)
     {
         printf("Valor de D invalido.\n");
         return EXIT_FAILURE;
     }
-
+    D = (unsigned)opcao;
     Arvore_B arvore = init(D);
 
     do
@@ -69,10 +69,7 @@ int main(void)
                 else
                     printf("Nao foi possivel inserir a chave %d.\n", chave);
 
-                /*
-                 * Depois de cada operacao a arvore
-                 * deve ser impressa.
-                 */
+
                 arvore.Implecao(&arvore);
 
                 break;
@@ -146,10 +143,6 @@ int main(void)
 
             case 0:
 
-                /*
-                 * Garante que nao fique memoria alocada
-                 * caso o usuario saia sem usar a opcao 5.
-                 */
                 arvore.Desaloca(&arvore);
 
                 printf("Programa encerrado.\n");
